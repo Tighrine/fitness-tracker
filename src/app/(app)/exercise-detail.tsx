@@ -23,7 +23,7 @@ const singleExerciseQuery = defineQuery(
   `*[_type == "exercise" && _id == $id][0]`
 );
 
-const ExerciseDetail = () => {
+export default function ExerciseDetail() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const [exercise, setExercise] = useState<Exercise | null>(null);
@@ -275,6 +275,4 @@ const ExerciseDetail = () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
-
-export default ExerciseDetail;
+}

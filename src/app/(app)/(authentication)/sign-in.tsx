@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import GoogleSingIn from "@/app/components/googleSingIn";
+import GoogleSingIn from "@/app/components/GoogleSingIn";
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn();

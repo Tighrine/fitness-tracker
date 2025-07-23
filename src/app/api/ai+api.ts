@@ -54,3 +54,4 @@ export async function POST(req: Request) {
         return Response.json({ error: "Failed to generate AI response" }, { status: 500 });
     }
 };
+

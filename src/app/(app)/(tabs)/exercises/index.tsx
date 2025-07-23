@@ -15,11 +15,11 @@ import { defineQuery } from "groq";
 import { client } from "@/lib/sanity/client";
 import { Exercise } from "@/lib/sanity/types";
 
-const exerciseQuery = defineQuery(`*[_type == "exercise"] {
+export const exercisesQuery = defineQuery(`*[_type == "exercise"] {
   ...
 }`);
 
-const exercises = () => {
+export default function Exercises() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = React.useState("");
   const [refreshing, setRefreshing] = React.useState(false);
@@ -30,7 +30,7 @@ const exercises = () => {
 
   const fetchExercises = async () => {
     try {
-      const exercises = await client.fetch(exerciseQuery);
+      const exercises = await client.fetch(exercisesQuery);
       setExercises(exercises);
       setFilteredExercises(exercises);
     } catch (error) {
@@ -126,6 +126,4 @@ const exercises = () => {
       />
     </SafeAreaView>
   );
-};
-
-export default exercises;
+}
