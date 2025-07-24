@@ -1,4 +1,4 @@
-import { Content, GoogleGenAI, Part } from "@google/genai"
+import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({});
 
@@ -46,7 +46,6 @@ export async function POST(req: Request) {
         if (!response.candidates || response.candidates.length === 0) {
             return Response.json({ error: "No response from AI" }, { status: 500 });
         }
-        console.log("AI response:", JSON.stringify(response.candidates[0].content), null, 2);
         const message = response.candidates[0].content.parts[0].text;
         return Response.json({ message });
     } catch (error) {

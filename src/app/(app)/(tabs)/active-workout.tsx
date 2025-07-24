@@ -19,6 +19,8 @@ import exercise from "sanity/schemaTypes/exercise";
 import ExerciseSelectionModal from "@/app/components/ExerciseSelectionModal";
 import { client } from "@/lib/sanity/client";
 import { defineQuery } from "groq";
+import { useUser } from "@clerk/clerk-expo";
+import { WorkoutData } from "@/app/api/save-workout+api";
 
 // Query to find exercise by name
 // Execute Query
@@ -30,6 +32,7 @@ const findExerciseQuery =
 
 const ActiveWorkout = () => {
   const router = useRouter();
+  const { user } = useUser();
   const {
     workoutExercises,
     setWorkoutExercises,
@@ -97,7 +100,10 @@ const ActiveWorkout = () => {
       // Reset the workout
       resetWorkout();
 
-      router.replace("/(app)/(tabs)/history?refresh=true");
+      router.push({
+        pathname: "/(app)/(tabs)/history",
+        params: { refresh: "true" },
+      });
     }
   };
 
@@ -144,6 +150,34 @@ const ActiveWorkout = () => {
           };
         })
       );
+
+      const validExercises = exercisesForSanity.filter(
+        (ex) => ex.sets.length > 0
+      );
+
+      if (validExercises.length === 0) {
+        Alert.alert(
+          "No completed sets",
+          "Please complete at least on set before saving the workout."
+        );
+        return false;
+      }
+
+      const workoutData: WorkoutData = {
+        _type: "workout",
+        userId: user.id,
+        date: new Date().toISOString(),
+        duration: durationInSeconds,
+        exercises: validExercises,
+      };
+
+      const result = fetch("/api/save-workout", {
+        method: "POST",
+        body: JSON.stringify({ workoutData }),
+      });
+
+      console.log("workout saved successfully: ", result);
+      return true;
     } catch (error) {
       console.error("Error saving workout:", error);
       Alert.alert("Save Failed", "Failed to save workout. Please try again.");

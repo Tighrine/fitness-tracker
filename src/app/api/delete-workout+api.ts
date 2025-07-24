@@ -6,14 +6,12 @@ export async function POST(request: Request) {
     try {
         await adminClient.delete(workoutId as string);
 
-        console.log("Workout deleted successfully:", workoutId);
-
         return Response.json({
             success: true,
             message: "Workout deleted successfully",
         });
     } catch (error) {
         console.error("Error saving workout:", error);
-        return Response.json({ error: "Failed to save workout" }, { status: 500 });
+        return Response.json({ error: "Failed to delete workout" }, { status: 500 });
     }
 }

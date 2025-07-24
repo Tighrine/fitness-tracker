@@ -32,7 +32,6 @@ export default function Profile() {
       );
       // Sign out logic here, e.g., using Clerk's signOut method
       // await signOut();
-      console.log("User signed out successfully");
     } catch (error) {
       console.error("Error signing out:", error);
     }

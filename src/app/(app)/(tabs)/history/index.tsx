@@ -1,9 +1,9 @@
 import { client } from "@/lib/sanity/client";
 import { GetWorkoutsQueryResult, Workout } from "@/lib/sanity/types";
 import { useClerk } from "@clerk/clerk-expo";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { defineQuery } from "groq";
-import React from "react";
+import React, { useCallback } from "react";
 import {
   ActivityIndicator,
   RefreshControl,
@@ -50,15 +50,6 @@ export default function HistoryPage() {
     fetchWorkouts();
   }, []);
 
-  // Handle refresh parameter from deleted workout
-  React.useEffect(() => {
-    if (refresh === "true") {
-      fetchWorkouts();
-      // Clear the refresh parameter from the URL
-      router.replace("/(app)/(tabs)/history");
-    }
-  }, [refresh]);
-
   const fetchWorkouts = async () => {
     if (!user.id) return;
 
@@ -66,9 +57,7 @@ export default function HistoryPage() {
       const results = await client.fetch(getWorkoutsQuery, {
         userId: user.id,
       });
-      console.log("id: ", user.id);
       setWorkouts(results);
-      console.log("Fetched workouts:", results);
     } catch (error) {
       console.error("Error fetching workouts:", error);
     } finally {
@@ -76,6 +65,21 @@ export default function HistoryPage() {
       setRefreshing(false);
     }
   };
+
+  // Handle refresh parameter from deleted workout
+  useFocusEffect(
+    useCallback(() => {
+      // This is the logic you want to run when the user returns to the screen.
+      // In your case, it's fetching the workouts again to get the latest data.
+      console.log("History screen focused, fetching workouts...");
+      fetchWorkouts();
+
+      // You can return a cleanup function if needed, but it's often not for this use case.
+      return () => {
+        // console.log("History screen blurred");
+      };
+    }, []) // Re-run the effect if the fetchWorkouts function changes
+  );
 
   const onRefresh = () => {
     setRefreshing(true);
