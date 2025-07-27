@@ -11,13 +11,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import ExerciseCard from "@/app/components/exerciseCard";
 import { useRouter } from "expo-router";
-import { defineQuery } from "groq";
 import { client } from "@/lib/sanity/client";
 import { Exercise } from "@/lib/sanity/types";
+import { exercisesQuery } from "@/lib/sanity/queries";
 
-export const exercisesQuery = defineQuery(`*[_type == "exercise"] {
-  ...
-}`);
 
 export default function Exercises() {
   const router = useRouter();

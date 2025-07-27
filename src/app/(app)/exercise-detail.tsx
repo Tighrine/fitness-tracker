@@ -15,13 +15,9 @@ import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Exercise } from "sanity/sanity.types";
 import { client, urlFor } from "@/lib/sanity/client";
-import { defineQuery } from "groq";
 import { getDifficultyColor, getDifficultyText } from "@/lib/helper";
 import Markdown from "react-native-markdown-display";
-
-const singleExerciseQuery = defineQuery(
-  `*[_type == "exercise" && _id == $id][0]`
-);
+import { singleExerciseQuery } from "@/lib/sanity/queries";
 
 export default function ExerciseDetail() {
   const router = useRouter();

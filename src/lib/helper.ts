@@ -1,28 +1,26 @@
-const getDifficultyColor = (difficulty: string) => {
-  switch (difficulty) {
-    case "beginner":
-      return "bg-green-500";
-    case "intermediate":
-      return "bg-yellow-500";
-    case "advanced":
-      return "bg-red-500";
-    default:
-      return "bg-gray-500";
-  }
-};
+import { GetWorkoutsQueryResult } from "./sanity/types";
 
-const getDifficultyText = (difficulty: string) => {
-  switch (difficulty) {
-    case "beginner":
-      return "Beginner";
-    case "intermediate":
-      return "Intermediate";
-    case "advanced":
-      return "Advanced";
-    default:
-      return "Unknown";
-  }
-};
+const diffMapToColor = {
+  beginner: "bg-green-500",
+  intermediate: "bg-yellow-500",
+  advanced: "bg-red-500",
+  default: "bg-gray-500",
+}
+
+const diffMapToText = {
+  beginner: "Beginner",
+  intermediate: "Intermediate",
+  advanced: "Advanced",
+  default: "Unknown",
+}
+
+const getDifficultyColor = (difficulty?: string) => (
+  difficulty && ["beginner", "intermediate", "advanced"].includes(difficulty) ? diffMapToColor[difficulty] : diffMapToColor.default
+);
+
+const getDifficultyText = (difficulty: string) => (
+  difficulty && ["beginner", "intermediate", "advanced"].includes(difficulty) ? diffMapToText[difficulty] : diffMapToText.default
+);
 
 const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
@@ -41,6 +39,13 @@ const formatDate = (dateString: string): string => {
             day: "numeric",
         });
     }
+};
+
+const formatJoinedDate = (date: Date): string => {
+    return date.toLocaleDateString("en-US", {
+        month: "long",
+        year: "numeric",
+    });
 };
 
 const formatDuration = (seconds: number): string => {
@@ -69,4 +74,11 @@ const formatDuration = (seconds: number): string => {
     }
 }
 
-export { getDifficultyColor, getDifficultyText, formatDate, formatDuration };
+  const getTotalSets = (workout: GetWorkoutsQueryResult[number]) => {
+    return workout.exercises.reduce(
+      (total, exercise) => total + (exercise.sets?.length || 0),
+      0
+    );
+  };
+
+export { getDifficultyColor, getDifficultyText, formatDate, formatDuration,  formatJoinedDate, getTotalSets };

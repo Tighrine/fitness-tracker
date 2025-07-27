@@ -1,8 +1,7 @@
 import { client } from "@/lib/sanity/client";
-import { GetWorkoutsQueryResult, Workout } from "@/lib/sanity/types";
+import { GetWorkoutsQueryResult } from "@/lib/sanity/types";
 import { useClerk } from "@clerk/clerk-expo";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
-import { defineQuery } from "groq";
 import React, { useCallback } from "react";
 import {
   ActivityIndicator,
@@ -14,29 +13,8 @@ import {
   View,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { formatDate, formatDuration } from "@/lib/helper";
-
-const getWorkoutsQuery = defineQuery(`
-  *[_type == "workout" && userId == $userId] | order(_createdAt desc) {
-    _id,
-    date,
-    duration,
-    exercises[] {
-        exercise-> {
-            _id,
-            name
-        },
-        sets[] {
-            reps,
-            weight,
-            weightUnit,
-            _type,
-            _key
-        },
-        _type,
-        _key
-      }
-  }`);
+import { formatDate, formatDuration, getTotalSets } from "@/lib/helper";
+import { getWorkoutsQuery } from "@/lib/sanity/queries";
 
 export default function HistoryPage() {
   const { user } = useClerk();
@@ -71,7 +49,6 @@ export default function HistoryPage() {
     useCallback(() => {
       // This is the logic you want to run when the user returns to the screen.
       // In your case, it's fetching the workouts again to get the latest data.
-      console.log("History screen focused, fetching workouts...");
       fetchWorkouts();
 
       // You can return a cleanup function if needed, but it's often not for this use case.
@@ -89,14 +66,6 @@ export default function HistoryPage() {
   const formatWorkoutDuration = (seconds?: number) => {
     if (!seconds) return "Duration not recorded";
     return formatDuration(seconds);
-  };
-
-  const getTotalSets = (workout: GetWorkoutsQueryResult[number]) => {
-    return (
-      workout.exercises?.reduce((total, exercise) => {
-        return total + (exercise.sets?.length || 0);
-      }, 0) || 0
-    );
   };
 
   const getExerciseNames = (workout: GetWorkoutsQueryResult[number]) => {
@@ -122,7 +91,7 @@ export default function HistoryPage() {
   }
 
   return (
-    <SafeAreaView className="flex flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <View className="px-6 py-4 bg-white border-b border-gray-200">
         <Text className="text-2xl font-bold text-gray-900">
           Workout History

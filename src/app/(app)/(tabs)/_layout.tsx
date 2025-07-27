@@ -1,8 +1,12 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { useUser } from "@clerk/clerk-expo";
+import { Image } from "react-native";
 
 export default function Layout() {
+  const { user } = useUser();
+
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen
@@ -47,9 +51,17 @@ export default function Layout() {
         options={{
           title: "Profile",
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="user" color={color} size={size} />
-          ),
+          tabBarIcon: ({ color, size }) =>
+            user.imageUrl ? (
+              <Image
+                source={{
+                  uri: user?.imageUrl ?? user?.externalAccounts[0]?.imageUrl,
+                }}
+                className="rounded-full w-7 h-7"
+              />
+            ) : (
+              <AntDesign name="playcircleo" color={color} size={size} />
+            ),
         }}
       />
       <Tabs.Screen
@@ -57,9 +69,6 @@ export default function Layout() {
         options={{
           title: "Active Workout",
           href: null, // Prevents the tab from being rendered in the tab bar
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="playcircleo" color={color} size={size} />
-          ),
         }}
       />
     </Tabs>

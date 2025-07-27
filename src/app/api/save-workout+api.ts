@@ -12,7 +12,7 @@ export interface WorkoutData {
             _type: string;
             _ref: string;
         };
-        sets:Array<{
+        sets: Array<{
             _type: string;
             _key: string;
             reps: number;

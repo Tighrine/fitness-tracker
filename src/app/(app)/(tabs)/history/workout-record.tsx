@@ -7,39 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { defineQuery } from "groq";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { GetWorkoutRecordQueryResult } from "@/lib/sanity/types";
 import { client } from "@/lib/sanity/client";
-import { formatDuration } from "@/lib/helper";
+import { formatDuration, getTotalSets } from "@/lib/helper";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-const getWorkoutRecordQuery =
-  defineQuery(`*[_type == "workout" && _id == $workoutId][0] {
-        _id,
-        _type,
-        _createdAt,
-        date,
-        duration,
-        exercises[] {
-            _key,
-            exercise-> {
-                _id,
-                name,
-                description,
-            },
-            sets[] {
-                reps,
-                weight,
-                weightUnit,
-                _type,
-                _key
-            },
-        },
-        _type,
-        _key
-    }`);
+import { getWorkoutRecordQuery } from "@/lib/sanity/queries";
 
 function WorkoutRecord() {
   const { workoutId } = useLocalSearchParams<{ workoutId: string }>();
@@ -89,14 +63,6 @@ function WorkoutRecord() {
   const formatWorkoutDuration = (seconds?: number) => {
     if (!seconds) return "Duration not recorded";
     return formatDuration(seconds); // import from "lib/utils"
-  };
-
-  const getTotalSets = () => {
-    return (
-      workout?.exercises?.reduce((total, exercise) => {
-        return total + (exercise.sets?.length || 0);
-      }, 0) || 0
-    );
   };
 
   const getTotalVolume = () => {
@@ -220,7 +186,7 @@ function WorkoutRecord() {
           <View className="flex-row items-center mb-3">
             <Ionicons name="bar-chart-outline" size={20} color="#6B7280" />
             <Text className="text-gray-700 ml-3 font-medium">
-              {getTotalSets()} total sets
+              {getTotalSets(workout)} total sets
             </Text>
           </View>
 

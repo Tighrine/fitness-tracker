@@ -15,20 +15,11 @@ import { useStopwatch } from "react-timer-hook";
 import { useWorkoutStore, WorkoutSet } from "store/workout-store";
 import { useFocusEffect, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import exercise from "sanity/schemaTypes/exercise";
 import ExerciseSelectionModal from "@/app/components/ExerciseSelectionModal";
 import { client } from "@/lib/sanity/client";
-import { defineQuery } from "groq";
 import { useUser } from "@clerk/clerk-expo";
 import { WorkoutData } from "@/app/api/save-workout+api";
-
-// Query to find exercise by name
-// Execute Query
-const findExerciseQuery =
-  defineQuery(`*[_type == "exercise" && name == $name][0] {
-        _id,
-        name
-    }`);
+import { findExerciseQuery } from "@/lib/sanity/queries";
 
 const ActiveWorkout = () => {
   const router = useRouter();
