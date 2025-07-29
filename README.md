@@ -1,8 +1,11 @@
-```md
-![Expo](https://img.shields.io/badge/built%20with-Expo-blue)
-![Clerk Auth](https://img.shields.io/badge/Auth-Clerk-orange)
-![Sanity](https://img.shields.io/badge/CMS-Sanity.io-ff69b4)
+![Expo](https://img.shields.io/badge/Built%20with-Expo-1B1F23?logo=expo&logoColor=white&color=000)
+![Expo Router](https://img.shields.io/badge/Navigation-Expo%20Router-000020?logo=react&logoColor=white)
+![Clerk](https://img.shields.io/badge/Auth-Clerk-blueviolet?logo=clerk&logoColor=white)
+![Sanity](https://img.shields.io/badge/CMS-Sanity-F03E2F?logo=sanity&logoColor=white)
+![Gemini AI](https://img.shields.io/badge/AI-Google%20Gemini-4285F4?logo=google&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
+
+
 
 # 🏋️‍♂️ Fitness Tracker
 
