@@ -1,3 +1,9 @@
+```md
+![Expo](https://img.shields.io/badge/built%20with-Expo-blue)
+![Clerk Auth](https://img.shields.io/badge/Auth-Clerk-orange)
+![Sanity](https://img.shields.io/badge/CMS-Sanity.io-ff69b4)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 # 🏋️‍♂️ Fitness Tracker
 
 **Fitness Tracker** est une application mobile construite avec **React Native + Expo**, permettant aux utilisateurs de suivre leurs activités physiques, avec intégration de l’IA pour un accompagnement intelligent et une interface dynamique et moderne.
