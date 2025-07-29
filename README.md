@@ -6,7 +6,7 @@
 
 - 🔐 Authentification sécurisée avec **Clerk**
 - 📅 Suivi d’activités physiques personnalisées
-- 🧠 Intégration **OpenAI** & **Google GenAI** pour recommandations/intelligence conversationnelle
+- 🧠 Intégration **Google GenAI** pour recommandations/intelligence conversationnelle
 - 🖼️ Gestion de contenu via **Sanity**
 - ⏱️ Minuteur intégré pour les entraînements
 - 🎨 Interface responsive stylisée avec **Tailwind (NativeWind)**
