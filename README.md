@@ -17,7 +17,7 @@
 - **Expo Router** pour la navigation
 - **Zustand** pour la gestion d'état
 - **Sanity.io** pour le contenu CMS
-- **OpenAI & Google GenAI** pour les fonctionnalités IA
+- **Google GenAI** pour les fonctionnalités IA
 - **Clerk** pour l'authentification
 - **NativeWind** pour le style
 
