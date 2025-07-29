@@ -30,6 +30,10 @@ git clone https://github.com/Tighrine/fitness-tracker.git
 cd fitness-tracker
 npm install
 npm start
+# Lancer Sanity:
+cd sanity
+npm install
+npm start
 
 # Lancer le simulateur:
 
