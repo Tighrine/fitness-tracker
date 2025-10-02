@@ -18,7 +18,6 @@ interface WorkoutExercise {
 }
 
 interface WorkoutStore {
-  // ⌘L to chat, ⌘K to generate
   workoutExercises: WorkoutExercise[];
   weightUnit: "kg" | "lbs";
 
